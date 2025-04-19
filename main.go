@@ -7,4 +7,5 @@ func main() {
 	log.Println("ben Enes")
 	log.Println("Merhaba ibrahim")
 	log.Println("nasılsın İbrahim Abi")
+	log.Println("hey selam")
 }
