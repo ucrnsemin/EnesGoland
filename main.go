@@ -1,15 +1,18 @@
 package main
 
-import "log"
+import (
+	"github.com/joho/godotenv"
+	"github.com/ucrnsemin/EnesGoland/config"
+	"log"
+)
 
 func main() {
-	log.Println("Hello Goland")
-	log.Println("ben Enes")
-	log.Println("Merhaba ibrahim")
-	log.Println("nasılsın İbrahim Abi")
-	log.Println("hey selam")
-	log.Println("hey selam")
-	log.Println("hey selam")
-	log.Println("hey selam")
-	log.Println("hey selam")
+	// .env dosyasını yükle
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file", err.Error())
+		return
+	}
+	config.InitDB()
+
 }
