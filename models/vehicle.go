@@ -26,5 +26,5 @@ type Vehicle struct {
 	ACPower         string `json:"ac_power"`          // AC Güç (Kw)
 	DCConnectorType string `json:"dc_connector_type"` // DC Şarj Bağlantı Tipi
 	DCPower         string `json:"dc_power"`          // DC Güç (kw)
-
+	Color           string `json:"color"`             // Araç Rengi
 }
