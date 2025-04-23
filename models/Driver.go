@@ -4,7 +4,9 @@
 	Name        : Enes Emin Ucar
 	Date        : 19.04.2025
 	Time        : 20:48
-	Notes       :
+	Notes       :Sürücülerin bilgilerini sınıflandırdığımız tablo
+Burada tabloya isim verirken büyük harf ile isimlendirirsek tablomuz her kademede erişilebilir olur.
+Küçük harf ile başlarsak privete olur ve sadece bu dosya içinde erişilebilir olur.
 
 
 */

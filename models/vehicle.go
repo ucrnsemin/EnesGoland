@@ -5,6 +5,8 @@
 	Date        : 19.04.2025
 	Time        : 19:08
 	Notes       :Elektrikli Aracları Tantittigimiz tablo
+Burada tabloya isim verirken büyük harf ile isimlendirirsek tablomuz her kademede erişilebilir olur.
+Küçük harf ile başlarsak privete olur ve sadece bu dosya içinde erişilebilir olur.
 
 
 */

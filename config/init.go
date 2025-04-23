@@ -4,7 +4,9 @@
 	Name        : Enes Emin Ucar
 	Date        : 19.04.2025
 	Time        : 19:34
-	Notes       :
+	Notes       :Db bağlantısı için gerekli olan ayarları yapıyoruz. Db bağlantısında kontrol edilmesi gereken
+parametreleri burada tanımlıyoruz.
+Eğer paramatreler eksik ise hata veriyoruz.
 
 
 */
