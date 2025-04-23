@@ -34,19 +34,19 @@ func main() {
 		return
 	}
 	// TABLO DÜZENLEMEK İÇİN AÇ
-	//err = config.DB.AutoMigrate(models.Vehicle{}, models.Driver{})
-	//if err != nil {
-	//	return
-	//}
+	err = config.DB.AutoMigrate(models.Vehicle{}, models.Driver{}, models.Organizasyon{})
+	if err != nil {
+		return
+	}
 	var vehicle = models.Vehicle{
-		Name:            "Model A Perfomans Dört Çeker",
+		Name:            "Model X Perfomans Dört Çeker",
 		Brand:           "Tesla",
-		Model:           "Model A",
+		Model:           "Model X",
 		Version:         "2024",
 		MaxSpeed:        "250",
-		BatteryCapacity: "75",
-		WLTPRange:       "480",
-		RealRange:       "400",
+		BatteryCapacity: "100",
+		WLTPRange:       "580",
+		RealRange:       "450",
 	}
 	config.DB.Create(&vehicle)
 	//	config.DB.Delete(&vehicle)
@@ -60,20 +60,20 @@ func main() {
 
 	// 	TODO : driver çalış
 	var driver = models.Driver{
-		FullName:      "Eren Can",
+		FullName:      "Umutcan Yıldırım",
 		Gender:        "male",
-		ContactNumber: "0536 541 99 67",
-		BirthDate:     "2002-02-22",
-		City:          "İstanbul",
+		ContactNumber: "0536 788 24 67",
+		BirthDate:     "2002-08-22",
+		City:          "Karabük",
 	}
 	config.DB.Create(&driver)
 
 	// TODO vehicle dirver tablosu oluştur ve araç ile sürücü eşleştiren ablo oluşur
-	var operations = models.Operations{
+	organizasyon := models.Organizasyon{
 		Vehicle: models.Vehicle{}, // Araç
 		Driver:  models.Driver{},  // Sürücü
 	}
-	config.DB.Create(&operations)
+	config.DB.Create(&organizasyon)
 
 	//TODO sigorta tablosu oluştur
 
