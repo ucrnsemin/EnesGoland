@@ -38,57 +38,57 @@ func main() {
 	if err != nil {
 		return
 	}
-	//var vehicle = models.Vehicle{
-	//	Name:            "Model A Perfomans Dört Çeker",
-	//	Brand:           "Tesla",
-	//	Model:           "Model A",
-	//	Version:         "2024",
-	//	MaxSpeed:        "250",
-	//	BatteryCapacity: "75",
-	//	WLTPRange:       "480",
-	//	RealRange:       "400",
-	//}
-	//config.DB.Create(&vehicle)
-	//	config.DB.Delete(&vehicle)
-	//vehicle = models.Vehicle{}
-	// config.DB.First(&vehicle, 2)
-	// config.DB.Delete(&vehicle, 1)
-	//config.DB.First(&vehicle, 11)
-	//vehicle.Version = "2000"
-	//vehicle.MaxSpeed = "200"
-	//config.DB.Save(&vehicle)
+	var vehicle = models.Vehicle{
+		Name:            "Model A Perfomans Dört Çeker",
+		Brand:           "Tesla",
+		Model:           "Model A",
+		Version:         "2024",
+		MaxSpeed:        "250",
+		BatteryCapacity: "75",
+		WLTPRange:       "480",
+		RealRange:       "400",
+	}
+	config.DB.Create(&vehicle)
+	config.DB.Delete(&vehicle)
+	vehicle = models.Vehicle{}
+	config.DB.First(&vehicle, 2)
+	config.DB.Delete(&vehicle, 1)
+	config.DB.First(&vehicle, 11)
+	vehicle.Version = "2000"
+	vehicle.MaxSpeed = "200"
+	config.DB.Save(&vehicle)
 
 	// 	TODO : driver çalış
-	//var driver = models.Driver{
-	//	FullName:      "Eren Can",
-	//	Gender:        "male",
-	//	ContactNumber: "0536 541 99 67",
-	//	BirthDate:     "2002-02-22",
-	//	City:          "İstanbul",
-	//}
-	//config.DB.Create(&driver)
+	var driver = models.Driver{
+		FullName:      "Eren Can",
+		Gender:        "male",
+		ContactNumber: "0536 541 99 67",
+		BirthDate:     "2002-02-22",
+		City:          "İstanbul",
+	}
+	config.DB.Create(&driver)
 
 	// TODO vehicle dirver tablosu oluştur ve araç ile sürücü eşleştiren ablo oluşur
-	//
-	//var d models.Driver
-	//var v models.Vehicle
-	//
-	//config.DB.First(&d, 1)
-	//config.DB.First(&v, 20)
-	//
-	//organizasyon := models.Organizasyon{
-	//	DriverID:       uint(d.Id),
-	//	DriverFullName: d.FullName,
-	//
-	//	VehicleID:   uint(v.Id),
-	//	VehicleName: v.Name,
-	//}
-	//
-	//config.DB.Create(&organizasyon)
 
-	//TODO sigorta tablosu oluştur
 	var d models.Driver
 	var v models.Vehicle
+
+	config.DB.First(&d, 1)
+	config.DB.First(&v, 20)
+
+	organizasyon := models.Organizasyon{
+		DriverID:       uint(d.Id),
+		DriverFullName: d.FullName,
+
+		VehicleID:   uint(v.Id),
+		VehicleName: v.Name,
+	}
+
+	config.DB.Create(&organizasyon)
+
+	//TODO sigorta tablosu oluştur
+	var dr models.Driver
+	var vh models.Vehicle
 
 	config.DB.First(&d, 10)
 	config.DB.First(&v, 14)
@@ -101,10 +101,10 @@ func main() {
 		InsurancePrice:          "1000",
 		InsuranceDeductible:     "100",
 		InsuranceStatus:         "Aktif",
-		InsuranceVehicleID:      uint(v.Id), // Araç ID
-		InsuranceDriverID:       uint(d.Id), // Sürücü ID
-		InsuranceVehicleName:    v.Name,     // Araç Adı
-		InsuranceDriverFullName: d.FullName, // Sürücü Adı
+		InsuranceVehicleID:      uint(vh.Id), // Araç ID // neden burada uint64 kullanılmıyor
+		InsuranceDriverID:       uint(dr.Id), // Sürücü ID
+		InsuranceVehicleName:    vh.Name,     // Araç Adı
+		InsuranceDriverFullName: dr.FullName, // Sürücü Adı
 	}
 
 	config.DB.Create(&insurance)

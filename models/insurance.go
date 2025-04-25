@@ -4,7 +4,7 @@
 	Name        : Enes Emin Ucar
 	Date        : 26.04.2025
 	Time        : 00:03
-	Notes       :
+	Notes       :Sigorta bilgilerini tanımladığımız modeldir.
 
 
 */
