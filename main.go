@@ -34,19 +34,19 @@ func main() {
 		return
 	}
 	// TABLO DÜZENLEMEK İÇİN AÇ
-	err = config.DB.AutoMigrate(models.Vehicle{}, models.Driver{}, models.Organizasyon{})
-	if err != nil {
-		return
-	}
+	//err = config.DB.AutoMigrate(models.Vehicle{}, models.Driver{})
+	//if err != nil {
+	//	return
+	//}
 	var vehicle = models.Vehicle{
-		Name:            "Model X Perfomans Dört Çeker",
+		Name:            "Model A Perfomans Dört Çeker",
 		Brand:           "Tesla",
-		Model:           "Model X",
+		Model:           "Model A",
 		Version:         "2024",
 		MaxSpeed:        "250",
-		BatteryCapacity: "100",
-		WLTPRange:       "580",
-		RealRange:       "450",
+		BatteryCapacity: "75",
+		WLTPRange:       "480",
+		RealRange:       "400",
 	}
 	config.DB.Create(&vehicle)
 	//	config.DB.Delete(&vehicle)
@@ -60,33 +60,30 @@ func main() {
 
 	// 	TODO : driver çalış
 	var driver = models.Driver{
-		FullName:      "Umutcan Yıldırım",
+		FullName:      "Eren Can",
 		Gender:        "male",
-		ContactNumber: "0536 788 24 67",
-		BirthDate:     "2002-08-22",
-		City:          "Karabük",
+		ContactNumber: "0536 541 99 67",
+		BirthDate:     "2002-02-22",
+		City:          "İstanbul",
 	}
 	config.DB.Create(&driver)
 
 	// TODO vehicle dirver tablosu oluştur ve araç ile sürücü eşleştiren ablo oluşur
-	// Öncelikle, ID'lere göre driver ve vehicle'ı çekiyoruz
+
 	var d models.Driver
 	var v models.Vehicle
 
-	// Veritabanından çekiyoruz
-	config.DB.First(&d, 10) // DriverID =
-	config.DB.First(&v, 14) // VehicleID =
+	config.DB.First(&d, 1)
+	config.DB.First(&v, 20)
 
-	// Organizasyon kaydını oluşturuyoruz
 	organizasyon := models.Organizasyon{
-		DriverID:       uint(d.Id), // uint64'ü uint'e dönüştür
+		DriverID:       uint(d.Id),
 		DriverFullName: d.FullName,
 
-		VehicleID:   uint(v.Id), // uint64'ü uint'e dönüştür
-		VehicleName: v.Name,     // Araç ismi
+		VehicleID:   uint(v.Id),
+		VehicleName: v.Name,
 	}
 
-	// Kaydet
 	config.DB.Create(&organizasyon)
 
 	//TODO sigorta tablosu oluştur
