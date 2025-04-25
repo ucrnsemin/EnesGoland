@@ -69,10 +69,24 @@ func main() {
 	config.DB.Create(&driver)
 
 	// TODO vehicle dirver tablosu oluştur ve araç ile sürücü eşleştiren ablo oluşur
+	// Öncelikle, ID'lere göre driver ve vehicle'ı çekiyoruz
+	var d models.Driver
+	var v models.Vehicle
+
+	// Veritabanından çekiyoruz
+	config.DB.First(&d, 10) // DriverID =
+	config.DB.First(&v, 14) // VehicleID =
+
+	// Organizasyon kaydını oluşturuyoruz
 	organizasyon := models.Organizasyon{
-		Vehicle: models.Vehicle{}, // Araç
-		Driver:  models.Driver{},  // Sürücü
+		DriverID:       uint(d.Id), // uint64'ü uint'e dönüştür
+		DriverFullName: d.FullName,
+
+		VehicleID:   uint(v.Id), // uint64'ü uint'e dönüştür
+		VehicleName: v.Name,     // Araç ismi
 	}
+
+	// Kaydet
 	config.DB.Create(&organizasyon)
 
 	//TODO sigorta tablosu oluştur
