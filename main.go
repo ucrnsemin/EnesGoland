@@ -19,6 +19,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/ucrnsemin/EnesGoland/config"
 	"github.com/ucrnsemin/EnesGoland/models"
+	"github.com/ucrnsemin/EnesGoland/services/vehiclesService"
 	"log"
 )
 
@@ -29,34 +30,92 @@ func main() {
 		log.Fatal("Error loading .env file", err.Error())
 		return
 	}
+
 	err = config.InitDB()
 	if err != nil {
 		return
 	}
-	//TABLO DÜZENLEMEK İÇİN AÇ
-	err = config.DB.AutoMigrate(models.Vehicle{}, models.Driver{}, models.Insurance{})
+	////TABLO DÜZENLEMEK İÇİN AÇ
+	err = config.DB.AutoMigrate(
+		models.Vehicle{},
+		models.Driver{},
+		models.Insurance{},
+		models.Organizasyon{},
+		models.Customer{})
+
 	if err != nil {
 		return
 	}
-	var vehicle = models.Vehicle{
-		Name:            "Model A Perfomans Dört Çeker",
-		Brand:           "Tesla",
-		Model:           "Model A",
-		Version:         "2024",
-		MaxSpeed:        "250",
-		BatteryCapacity: "75",
-		WLTPRange:       "480",
-		RealRange:       "400",
+
+	var service = vehiclesService.NewVehicleService(config.DB)
+
+	// Burada araçları silip tekrar ekliyoruz
+	service.InsertVehicles()
+
+	// Burada sürücüleri silip tekrar ekliyoruz
+	service.InsertDrivers()
+
+	// Burada müşteri bilgilerini silip tekrar ekliyoruz
+	service.InsertCustomers()
+
+	log.Println("---------------------------------")
+	log.Println("Bireysel Müşteriler")
+
+	if customers, err := service.GetCustomers(0); err == nil {
+		service.PrintCustomers(customers)
+	} else {
+		log.Println("Error: ", err)
+		return
 	}
-	config.DB.Create(&vehicle)
-	config.DB.Delete(&vehicle)
-	vehicle = models.Vehicle{}
-	config.DB.First(&vehicle, 2)
-	config.DB.Delete(&vehicle, 1)
-	config.DB.First(&vehicle, 11)
-	vehicle.Version = "2000"
-	vehicle.MaxSpeed = "200"
-	config.DB.Save(&vehicle)
+
+	log.Println("---------------------------------")
+	log.Println("Kurumsal Müşteriler")
+
+	if customers, err := service.GetCustomers(1); err == nil {
+		service.PrintCustomers(customers)
+	} else {
+		log.Println("Error: ", err)
+		return
+	}
+
+	return
+
+	//var org models.Organizasyon
+	//if err := config.DB.
+	//	Where("id = ?", 8).
+	//	Preload("Driver").
+	//	Preload("Vehicle").
+	//	Debug().
+	//	First(&org).
+	//	Error; err != nil {
+	//	log.Println("Error: ", err)
+	//	return
+	//}
+	//log.Println("Vehicle: ", org.Vehicle)
+	//log.Println("Driver: ", org.Driver)
+	//log.Println("Organizasyon: ", org)
+	//return
+	//
+
+	//var vehicle = models.Vehicle{
+	//	Name:            "Model A Perfomans Dört Çeker",
+	//	Brand:           "Tesla",
+	//	Model:           "Model A",
+	//	Version:         "2024",
+	//	MaxSpeed:        "250",
+	//	BatteryCapacity: "75",
+	//	WLTPRange:       "480",
+	//	RealRange:       "400",
+	//}
+	//config.DB.Create(&vehicle)
+	//config.DB.Delete(&vehicle)
+	//vehicle = models.Vehicle{}
+	//config.DB.First(&vehicle, 2)
+	//config.DB.Delete(&vehicle, 1)
+	//config.DB.First(&vehicle, 11)
+	//vehicle.Version = "2000"
+	//vehicle.MaxSpeed = "200"
+	//config.DB.Save(&vehicle)
 
 	// 	TODO : driver çalış
 	var driver = models.Driver{
@@ -77,10 +136,10 @@ func main() {
 	config.DB.First(&v, 20)
 
 	organizasyon := models.Organizasyon{
-		DriverID:       uint(d.Id),
+		DriverID:       d.Id,
 		DriverFullName: d.FullName,
 
-		VehicleID:   uint(v.Id),
+		VehicleID:   v.Id,
 		VehicleName: v.Name,
 	}
 
@@ -101,8 +160,8 @@ func main() {
 		InsurancePrice:          "1000",
 		InsuranceDeductible:     "100",
 		InsuranceStatus:         "Aktif",
-		InsuranceVehicleID:      uint(vh.Id), // Araç ID // neden burada uint64 kullanılmıyor
-		InsuranceDriverID:       uint(dr.Id), // Sürücü ID
+		InsuranceVehicleID:      vh.Id,       // Araç ID / neden burada uint64 kullanılmıyor
+		InsuranceDriverID:       dr.Id,       // Sürücü ID
 		InsuranceVehicleName:    vh.Name,     // Araç Adı
 		InsuranceDriverFullName: dr.FullName, // Sürücü Adı
 	}
