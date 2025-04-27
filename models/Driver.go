@@ -13,11 +13,15 @@ Küçük harf ile başlarsak privete olur ve sadece bu dosya içinde erişilebil
 
 package models
 
+import "time"
+
 type Driver struct {
-	Id            uint64 `json:"id" gorm:"primary_key"`
-	FullName      string `json:"full_name"`
-	Gender        string `json:"gender"`
-	ContactNumber string `json:"contact_number"`
-	BirthDate     string `json:"birth_date"`
-	City          string `json:"city"`
+	Id            uint64    `json:"id" gorm:"primary_key"`
+	FullName      string    `json:"full_name"`
+	Gender        string    `json:"gender"`
+	ContactNumber string    `json:"contact_number"`
+	BirthDate     string    `json:"birth_date"`
+	City          string    `json:"city"`
+	CreatedAt     time.Time // Automatically managed by GORM for creation time
+	UpdatedAt     time.Time // Automatically managed by GORM for update time
 }
