@@ -71,3 +71,37 @@ func (s *VehicleService) InsertDrivers() {
 	s.DB.Create(&drivers)
 
 }
+
+func (s *VehicleService) UpdateDrivers() {
+	if err := s.DB.
+		Where("id <> ? ", 0).
+		Updates(&models.Driver{}).Error; err != nil {
+		log.Println(err)
+		return
+	}
+	var drivers []models.Driver
+
+	var driver = models.Driver{
+		FullName:      "Eren Can",
+		Gender:        "",
+		ContactNumber: "",
+		BirthDate:     "",
+		City:          "",
+	}
+
+	drivers = append(drivers, driver)
+
+	s.DB.Create(&drivers)
+
+}
+
+func (s *VehicleService) DeleteDrivers() {
+	if err := s.DB.
+		Where("id <> ? ", 0).
+		Delete(&models.Driver{}).
+		Error; err != nil {
+		log.Println(err)
+		return
+	}
+
+}
