@@ -86,3 +86,39 @@ func (s *VehicleService) InsertVehicles() {
 	s.DB.Create(&vehicles)
 
 }
+
+func (s *VehicleService) UpdateVehicles() {
+	if err := s.DB.
+		Where("id <> ? ", 0).
+		Updates(&models.Vehicle{}).Error; err != nil {
+		log.Println(err)
+		return
+	}
+	var vehicles []models.Vehicle
+
+	var vehicle = models.Vehicle{
+		Name:            "Model A Perfomans Dört Çeker",
+		Brand:           "Tesla",
+		Model:           "Model A",
+		Version:         "2024",
+		MaxSpeed:        "250",
+		BatteryCapacity: "75",
+		WLTPRange:       "480",
+		RealRange:       "400",
+	}
+	vehicles = append(vehicles, vehicle)
+
+	s.DB.Create(&vehicles)
+}
+
+func (s VehicleService) DeleteVehicles() {
+	if err := s.DB.
+		Where("id <> ? ", 0).
+		Delete(&models.Vehicle{}).Error; err != nil {
+		log.Println(err)
+		return
+	}
+	log.Println("Vehicle records deleted successfully.")
+	return
+
+}
