@@ -24,6 +24,7 @@ import (
 )
 
 func main() {
+
 	// .env dosyasını yükle
 	err := godotenv.Load()
 	if err != nil {
@@ -44,19 +45,20 @@ func main() {
 		models.Customer{})
 
 	if err != nil {
+		log.Println("Error: ", err)
 		return
 	}
 
 	var service = vehiclesService.NewVehicleService(config.DB)
 
 	// Burada araçları silip tekrar ekliyoruz
-	service.InsertVehicles()
+	//service.InsertVehicles()
 
 	// Burada sürücüleri silip tekrar ekliyoruz
-	service.InsertDrivers()
+	//service.InsertDrivers()
 
 	// Burada müşteri bilgilerini silip tekrar ekliyoruz
-	service.InsertCustomers()
+	//service.InsertCustomers()
 
 	log.Println("---------------------------------")
 	log.Println("Bireysel Müşteriler")
@@ -78,7 +80,18 @@ func main() {
 		return
 	}
 
-	return
+	// Burada organizasyon bilgilerini silip tekrar ekliyoruz
+	service.InsertOrganizasyon()
+
+	if organizasyon, err := service.GetOrganizasyon(); err == nil {
+		service.PrintOrganizasyon(organizasyon)
+	} else {
+		log.Println("Error: ", err)
+		return
+	}
+
+	// Burada sigorta bilgilerini silip tekrar ekliyoruz
+	service.InsertInsurance()
 
 	//var org models.Organizasyon
 	//if err := config.DB.
@@ -97,74 +110,4 @@ func main() {
 	//return
 	//
 
-	//var vehicle = models.Vehicle{
-	//	Name:            "Model A Perfomans Dört Çeker",
-	//	Brand:           "Tesla",
-	//	Model:           "Model A",
-	//	Version:         "2024",
-	//	MaxSpeed:        "250",
-	//	BatteryCapacity: "75",
-	//	WLTPRange:       "480",
-	//	RealRange:       "400",
-	//}
-	//config.DB.Create(&vehicle)
-	//config.DB.Delete(&vehicle)
-	//vehicle = models.Vehicle{}
-	//config.DB.First(&vehicle, 2)
-	//config.DB.Delete(&vehicle, 1)
-	//config.DB.First(&vehicle, 11)
-	//vehicle.Version = "2000"
-	//vehicle.MaxSpeed = "200"
-	//config.DB.Save(&vehicle)
-
-	// 	TODO : driver çalış
-	var driver = models.Driver{
-		FullName:      "Eren Can",
-		Gender:        "male",
-		ContactNumber: "0536 541 99 67",
-		BirthDate:     "2002-02-22",
-		City:          "İstanbul",
-	}
-	config.DB.Create(&driver)
-
-	// TODO vehicle dirver tablosu oluştur ve araç ile sürücü eşleştiren ablo oluşur
-
-	var d models.Driver
-	var v models.Vehicle
-
-	config.DB.First(&d, 1)
-	config.DB.First(&v, 20)
-
-	organizasyon := models.Organizasyon{
-		DriverID:       d.Id,
-		DriverFullName: d.FullName,
-
-		VehicleID:   v.Id,
-		VehicleName: v.Name,
-	}
-
-	config.DB.Create(&organizasyon)
-
-	//TODO sigorta tablosu oluştur
-	var dr models.Driver
-	var vh models.Vehicle
-
-	config.DB.First(&d, 10)
-	config.DB.First(&v, 14)
-
-	insurance := models.Insurance{
-		InsuranceFirm:           "Allianz",
-		InsuranceType:           "Kasko",
-		InsuranceStartDate:      "2025-01-01",
-		InsuranceEndDate:        "2026-01-01",
-		InsurancePrice:          "1000",
-		InsuranceDeductible:     "100",
-		InsuranceStatus:         "Aktif",
-		InsuranceVehicleID:      vh.Id,       // Araç ID / neden burada uint64 kullanılmıyor
-		InsuranceDriverID:       dr.Id,       // Sürücü ID
-		InsuranceVehicleName:    vh.Name,     // Araç Adı
-		InsuranceDriverFullName: dr.FullName, // Sürücü Adı
-	}
-
-	config.DB.Create(&insurance)
 }
