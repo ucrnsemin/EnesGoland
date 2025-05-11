@@ -92,27 +92,6 @@ func (s VehicleService) UpdateInsurance(insurance models.Insurance) {
 		return
 	}
 
-	var insurances []models.Insurance
-
-	var insurance = models.Insurance{
-		InsuranceID:             insurance.InsuranceID,
-		InsuranceFirm:           insurance.InsuranceFirm,
-		InsuranceType:           insurance.InsuranceType,
-		InsuranceStartDate:      insurance.InsuranceStartDate,
-		InsuranceEndDate:        insurance.InsuranceEndDate,
-		InsurancePrice:          insurance.InsurancePrice,
-		InsuranceDeductible:     insurance.InsuranceDeductible,
-		InsuranceStatus:         insurance.InsuranceStatus,
-		InsuranceVehicleID:      insurance.InsuranceVehicleID,      // Araç ID / neden burada uint64 kullanılmıyor
-		InsuranceDriverID:       insurance.InsuranceDriverID,       // Sürücü ID
-		InsuranceVehicleName:    insurance.InsuranceVehicleName,    // Araç Adı
-		InsuranceDriverFullName: insurance.InsuranceDriverFullName, // Sürücü Adı
-	}
-
-	insurances = append(insurances, insurance)
-
-	s.DB.Create(&insurances)
-
 	println("Insurance record updated successfully.")
 	return
 }
