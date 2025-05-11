@@ -91,5 +91,48 @@ func (s *VehicleService) PrintCustomers(customers []models.Customer) {
 	}
 }
 
-// TODO  update customer fonksiyonu yazılacak
 // TODO  delete customer fonksiyonu yazılacak
+
+func (s *VehicleService) DeleteCustomer(customerID uint64) {
+	if err := s.DB.
+		Where("id = ?", customerID).
+		Delete(&models.Customer{}).
+		Error; err != nil {
+		log.Println(err)
+		return
+	}
+	log.Printf("Customer with ID %d deleted successfully\n", customerID)
+}
+
+// TODO  update customer fonksiyonu yazılacak
+
+func (s *VehicleService) UpdateCustomer(customerID uint64, customer models.Customer) {
+	if err := s.DB.
+		Model(&models.Customer{}).
+		Where("id = ?", customerID).
+		Updates(customer).
+		Error; err != nil {
+		log.Println(err)
+		return
+	}
+	var customers []models.Customer
+
+	var _ = models.Customer{
+		ID:           customerID,
+		CustomerType: 0,
+		CustomerName: "Mehmet Ali Yazıcı",
+		PhoneNumber:  "0536 541 99 67",
+		Email:        "asdfş",
+		TaxArea:      "İstanbul",
+		TaxNumber:    "1234567890",
+		Address:      "İstanbul",
+		City:         "İstanbul",
+		County:       "Beşiktaş",
+	}
+	customers = append(customers, customer)
+
+	s.DB.Create(&customers)
+
+	log.Printf("Customer ID: %d, Name: %s) updated successfully\n")
+
+}
