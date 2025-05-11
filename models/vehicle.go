@@ -17,21 +17,21 @@ import "time"
 
 // Vehicle : Elektrikli araçların tanımladığı modeldir
 type Vehicle struct {
-	Id              uint64    `json:"id" gorm:"primary_key;"`
-	PlateNumber     string    `json:"plate_number" gorm:"size:255;"`
-	Name            string    `json:"name"`
-	Brand           string    `json:"brand"`
-	Model           string    `json:"model"`
-	Version         string    `json:"version"`
-	MaxSpeed        string    `json:"max_speed"`
-	BatteryCapacity string    `json:"battery_capacity"`
-	WLTPRange       string    `json:"wl_tp_range"`       // fabrika verilerine göre menzil (km)
-	RealRange       string    `json:"real_range"`        // Gerçek menzil (km)
-	ACConnectorType string    `json:"ac_connector_type"` // AC Şarj Bağlantı Tipi
-	ACPower         string    `json:"ac_power"`          // AC Güç (Kw)
-	DCConnectorType string    `json:"dc_connector_type"` // DC Şarj Bağlantı Tipi
-	DCPower         string    `json:"dc_power"`          // DC Güç (kw)
-	Color           string    `json:"color"`             // Araç Rengi
-	CreatedAt       time.Time `json:"created_at"`
-	UpdatedAt       time.Time `json:"updated_at"` // Automatically managed by GORM for update time
+	Id              uint64    `json:"id" gorm:"primary_key;"`        // Araç Kimlik Numarası
+	PlateNumber     string    `json:"plate_number" gorm:"size:255;"` // Araç Plaka Numarası
+	Name            string    `json:"name"`                          // Araç Adı
+	Brand           string    `json:"brand"`                         // Araç Markası
+	Model           string    `json:"model"`                         // Araç Modeli
+	Version         string    `json:"version"`                       // Araç Versiyonu
+	MaxSpeed        string    `json:"max_speed"`                     // Araç Maksimum Hız (km/saat)
+	BatteryCapacity string    `json:"battery_capacity"`              // Araç Batarya Kapasitesi (Kw)
+	WLTPRange       string    `json:"wl_tp_range"`                   // fabrika verilerine göre menzil (km)
+	RealRange       string    `json:"real_range"`                    // Gerçek menzil (km)
+	ACConnectorType string    `json:"ac_connector_type"`             // AC Şarj Bağlantı Tipi
+	ACPower         string    `json:"ac_power"`                      // AC Güç (Kw)
+	DCConnectorType string    `json:"dc_connector_type"`             // DC Şarj Bağlantı Tipi
+	DCPower         string    `json:"dc_power"`                      // DC Güç (kw)
+	Color           string    `json:"color"`                         // Araç Rengi
+	CreatedAt       time.Time `json:"created_at"`                    // Automatically managed by GORM for creation time
+	UpdatedAt       time.Time `json:"updated_at"`                    // Automatically managed by GORM for update time
 }
