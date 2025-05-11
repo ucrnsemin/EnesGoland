@@ -91,8 +91,6 @@ func (s *VehicleService) PrintCustomers(customers []models.Customer) {
 	}
 }
 
-// TODO  delete customer fonksiyonu yazılacak
-
 func (s *VehicleService) DeleteCustomer(customerID uint64) {
 	if err := s.DB.
 		Where("id = ?", customerID).
@@ -103,8 +101,6 @@ func (s *VehicleService) DeleteCustomer(customerID uint64) {
 	}
 	log.Printf("Customer with ID %d deleted successfully\n", customerID)
 }
-
-// TODO  update customer fonksiyonu yazılacak
 
 func (s *VehicleService) UpdateCustomer(customerID uint64, customer models.Customer) {
 	if err := s.DB.
